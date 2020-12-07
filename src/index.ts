@@ -4,6 +4,7 @@ import Day3 from './day3';
 import Day4 from './day4';
 import Day5 from './day5';
 import Day6 from './day6';
+import Day7 from './day7';
 
 export interface AocDay {
   run(): Promise<void>;
@@ -17,6 +18,7 @@ async function main() {
     'day4': new Day4(),
     'day5': new Day5(),
     'day6': new Day6(),
+    'day7': new Day7(),
   };
 
   const which = process.argv[2];

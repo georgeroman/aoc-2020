@@ -1,7 +1,7 @@
 import { AocDay } from '.';
 import { readFile } from './utils';
 
-export default class Day5 implements AocDay {
+export default class Day6 implements AocDay {
   private parseInputAsAnyone(input: string): Set<string>[] {
     const lines = input.split('\n');
     lines.push('');
