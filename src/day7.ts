@@ -30,8 +30,8 @@ export default class Day7 implements AocDay {
   private canHoldCache: { [key: string]: boolean } = {};
   private canHoldBag(bags: Bags, holdingBag: string, holdedBag: string): boolean {
     const cacheKey = `${holdingBag}:${holdedBag}`;
-    if (this.canHoldCache[cacheKey]) {
-      return true;
+    if (cacheKey in this.canHoldCache) {
+      return this.canHoldCache[cacheKey];
     }
 
     for (const { name } of bags[holdingBag]) {
