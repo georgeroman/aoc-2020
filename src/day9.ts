@@ -1,7 +1,7 @@
 import BN from 'bn.js';
 
 import { AocDay } from '.';
-import { readFile } from './utils';
+import { bn, readFile } from './utils';
 
 export default class Day9 implements AocDay {
   async run() {
@@ -30,17 +30,17 @@ export default class Day9 implements AocDay {
     console.log(invalid);
 
     // Part 2
-    const partialSums: BN[] = [new BN(numbers[0])];
+    const partialSums: BN[] = [bn(numbers[0])];
     for (let i = 1; i < numbers.length; i++) {
-      partialSums.push(partialSums[i - 1].add(new BN(numbers[i])));
+      partialSums.push(partialSums[i - 1].add(bn(numbers[i])));
     }
 
     let i = 0, j = 1;
     while (j < numbers.length) {
       const diff = partialSums[j].sub(partialSums[i]);
-      if (diff.lt(new BN(invalid))) {
+      if (diff.lt(bn(invalid))) {
         j++;
-      } else if (diff.gt(new BN(invalid))) {
+      } else if (diff.gt(bn(invalid))) {
         i++;
       } else {
         const sequence = numbers.slice(i, j + 1);

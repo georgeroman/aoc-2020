@@ -1,7 +1,7 @@
 import BN from 'bn.js';
 
 import { AocDay } from '.';
-import { readFile } from './utils';
+import { bn, readFile } from './utils';
 
 export default class Day13 implements AocDay {
   async run() {
@@ -34,30 +34,30 @@ export default class Day13 implements AocDay {
     console.log((earliestTimestamp - timestamp) * earliestBus);
 
     // Part 2
-    const congruences = busesWithIndex.map(([b, i]) => new BN(b - i % b));
-    const moduli = busesWithIndex.map(([b, ]) => new BN(b));
+    const congruences = busesWithIndex.map(([b, i]) => bn(b - i % b));
+    const moduli = busesWithIndex.map(([b, ]) => bn(b));
     
     const invmod = (a: BN, n: BN): BN  => {
-      let [t, newT, r, newR] = [new BN(0), new BN(1), n, a.mod(n)];
-      while (!newR.eq(new BN(0))) {
+      let [t, newT, r, newR] = [bn(0), bn(1), n, a.mod(n)];
+      while (!newR.eq(bn(0))) {
         let q = r.div(newR);
         [newT, t] = [t.sub(q.mul(newT)), newT];
         [newR, r] = [r.sub(q.mul(newR)), newR];
       }
-      if (r.gt(new BN(1))) {
+      if (r.gt(bn(1))) {
         throw new Error('Modular inverse does not exist');
       }
-      if (t.lt(new BN(0))) {
+      if (t.lt(bn(0))) {
         t = t.add(n);
       }
       return t;
     };
 
-    const moduliProduct = moduli.reduce((acc, m) => acc.mul(new BN(m)), new BN(1));
+    const moduliProduct = moduli.reduce((acc, m) => acc.mul(bn(m)), bn(1));
 
-    let result: BN = new BN(0);
+    let result: BN = bn(0);
     for (let i = 0; i < busesWithIndex.length; i++) {
-      const x = moduliProduct.div(new BN(moduli[i]));
+      const x = moduliProduct.div(bn(moduli[i]));
       result = result.add(congruences[i].mul(x).mul(invmod(x, moduli[i])));
     }
     result = result.mod(moduliProduct);
