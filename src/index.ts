@@ -20,6 +20,8 @@ import Day19 from './day19';
 import Day20 from './day20';
 import Day21 from './day21';
 import Day22 from './day22';
+import Dat23 from './day23';
+import Day23 from './day23';
 
 export interface AocDay {
   run(): Promise<void>;
@@ -49,6 +51,7 @@ async function main() {
     'day20': new Day20(),
     'day21': new Day21(),
     'day22': new Day22(),
+    'day23': new Day23(),
   };
 
   const which = process.argv[2];
